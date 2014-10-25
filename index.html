@@ -1,0 +1,54 @@
+<!doctype html>
+<html ng-app="parking"> 
+	<head>
+		<title>Parking</title>
+		<script src="angular.js"></script>
+		<script>
+			var parking = angular.module("parking", []);
+			parking.controller("parkingCtrl", function($scope) {
+				$scope.appTitle = '[Parkt] Parking';
+				$scope.cars = [
+					{plate: '6MBV006'},
+					{plate: '5BBM299'},
+					{plate: '5AOJ230'}
+				];
+
+				$scope.colors = ["White", "Black", "Blue", "Red", "Silver"];
+
+				$scope.park = function(car) {
+					$scope.cars.push(angular.copy(car));
+					delete $scope.car;
+				}
+			});
+		</script>
+		<style>
+			.selected {
+				background-color: red;
+			}
+		</style>
+	</head>
+	<body ng-controller="parkingCtrl">
+		<h3 ng-bind="appTitle"></h3>
+		<table>
+			<thead>
+				<tr>
+					<th></th>
+					<th>Plate</th>
+					<th>Color</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-class="{selected: car.selected}" ng-repeat="car in cars">
+					<td>
+						<input type="checkbox" ng-model="car.selected" />
+					</td>
+					<td ng-bind="car.plate"></td>
+					<td><span ng-bind="car.color"></span></td>
+				</tr>
+			</tbody>
+		</table>
+		<input type="text" ng-model="car.color" />
+		<select ng-model="car.color" ng-options="color for color in colors">Pick a color</select>
+		<button ng-disabled="!car.plate || !car.color" ng-click="park(car)">Salvar</button>
+	</body>
+</html>
