@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf8" />
+		<title>Stock Market App</title>
+	</head>
+	<body ng-app="stockMarketApp">
+		<div ng-controller="MainCtrl as mainCtrl">
+			<h3>List of Stocks</h3>
+			<div ng-repeat="s in mainCtrl.stocks">
+				<div stock-widget stock-data="s" stock-title="Stock {{$index}}. {{s.name}}" when-select="mainCtrl.onStockSelect(stockPrice, stockName)"></div>
+			</div>
+			<button ng-click="mainCtrl.changeAllStocks()">
+				Change All Stocks From Controller
+			</button>
+			<button ng-click="mainCtrl.changeFirstStock()">
+				Change First Stock From Controllers
+			</button>
+		</div>
+
+		<script src="lib/angular.js"></script>
+		<script src="js/app.js"></script>
+		<script src="js/controllers.js"></script>
+		<script src="js/directives.js"></script>
+	</body>
+</html>
