@@ -1,15 +1,15 @@
 <!doctype html>
-<html>
+<html ng-app="routingApp">
 	<head>
 		<title>AngularJs Routing</title>
 		<script src="lib/angular.js"></script>
 		<script src="lib/angular-route.js"></script>
 	</head>
-	<body ng-app="routingApp">
+	<body>
 		<h2>AngularJs Routing Application</h2>
 		<ul>
 			<li><a href="#/">Default Route</a></li>
-			<li><a href="#/second">Secound Route</a></li>
+			<li><a href="#/second/123">Secound Route</a></li>
 			<li><a href="#/asdasdasd">Nonexistent Route</a></li>
 		</ul>
 
@@ -17,10 +17,36 @@
 
 		<script>
 			angular.module("routingApp", ["ngRoute"])
+			.value("Constant", {MAGIC_NUMBER: 42})
 			.config(["$routeProvider", function($routeProvider) {
 				$routeProvider.when("/", {template: '<h5>This is the default route</h5>'})
-							  .when("/second", {template: '<h5>This is the second route</h5>'})
+							  .when("/second/:id", {
+							  		template: '<h5>This is the second route id: {{estudos.id}}</h5>',
+							  		resolve: {
+							  			immediate: ["Constant", function(Constant) {
+							  				return Constant.MAGIC_NUMBER * 4;
+							  			}],
+							  			async: ["$http", function($http) {
+							  				return $http.get('api/products.php').then(function(response) {
+							  					console.log("Eu estou passado para o controlador", response);
+							  					return response;
+							  				});
+							  			}]
+							  		},
+							  		controller: "estudosCtrl",
+							  		controllerAs: "estudos"
+							  		/*,
+							  		controller: ["$log", "immediate", "async", function($log, immediate, async){
+							  			$log.log("Immediate is ", immediate);
+							  			$log.log("Server returned for async", async);
+							  		}]*/
+							  })
 							  .otherwise({redirectTo: "/"});
+			}])
+			.controller("estudosCtrl", ["$scope", "$log", "immediate", "async", "$routeParams", function($scope, $log, immediate, async, $routeParams) {
+				this.id = $routeParams.id;
+				$log.log("Immediate is ", immediate);
+				$log.log("Server returned for async ", async);
 			}]);
 		</script>
 	</body>
