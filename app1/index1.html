@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Stock Market App</title>
+		<link rel="stylesheet" href="main.css" />
+	</head>
+	<body ng-app="stockMarketApp">
+		<div ng-controller="MainCtrl as mainCtrl">
+			<tabs>
+				<tab title="First Tab">
+					Este é o primeiro guia.
+					O aplicativo começou no {{mainCtrl.startedTime | date}}
+				</tab>
+				<tab title="Second Tab">
+					Este é o segundo separador
+					<div ng-repeat="stock in mainCtrl.stocks">
+						Stock Name: {{stock.name}}
+					</div>
+				</tab>
+			</tabs>
+		</div>
+		<script src="lib/angular.js"></script>
+		<script src="js/app.js"></script>
+		<script src="js/controllers1.js"></script>
+		<script src="js/tabs.js"></script>
+		<script src="js/tab.js"></script>
+	</body>
+</html>

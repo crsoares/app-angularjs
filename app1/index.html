@@ -8,14 +8,8 @@
 		<div ng-controller="MainCtrl as mainCtrl">
 			<h3>List of Stocks</h3>
 			<div simple-stock-repeat="mainCtrl.stocks">
-				Este conteúdo vai ser surpreendido
+				We found {{stock.name}} at {{currentIndex}}
 			</div>
-			<button ng-click="mainCtrl.changeAllStocks()">
-				Change All Stocks From Controller
-			</button>
-			<button ng-click="mainCtrl.changeFirstStock()">
-				Change First Stock From Controllers
-			</button>
 		</div>
 
 		<script src="lib/angular.js"></script>
